@@ -1,0 +1,7 @@
+syntax = "proto3";
+package response;
+
+message Response {
+		bool success = 1;
+		optional string error = 2;
+}

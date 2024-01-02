@@ -1,0 +1,31 @@
+syntax = "proto3";
+package tags;
+
+import "response.proto";
+
+service GetTags {
+		rpc GetTags (TagsRequest) returns (TagsReply);
+}
+
+enum TagType {
+		TAG = 0;
+		PERSON = 1;
+		CHARACTER = 2;
+		AUTHOR = 3;
+}
+
+message Tag {
+		int32 id = 1;
+		string name = 2;
+		bool restricted = 3;
+		int32 uses = 4;
+		TagType tag_type = 5;
+		repeated int32 parent_tags = 6;
+}
+
+message TagsRequest {}
+
+message TagsReply {
+		Reponse response = 1;
+		repeated Tag tag = 2;
+}

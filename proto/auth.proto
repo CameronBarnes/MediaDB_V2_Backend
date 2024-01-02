@@ -1,0 +1,19 @@
+syntax = "proto3";
+package auth;
+
+import "response.proto";
+
+service Auth {
+		rpc GetAuth (AuthRequest) returns (AuthReply);
+}
+
+message AuthRequest {
+		string passphrase = 1;
+		optional string name = 2;
+}
+
+message AuthReply {
+		Response response = 1;
+		bool allow_private = 2;
+		optional string token = 3;
+}

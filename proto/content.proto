@@ -1,0 +1,78 @@
+syntax = "proto3";
+package content;
+
+import "response.proto";
+
+service GetContent {
+		rpc GetContent (ContentRequest) returns (ContentReply);
+		rpc GetPool (ContentRequest) returns (PoolReply)
+}
+
+service UpdateContent {
+		rpc UpdateContentViews (UpdateContentViewsRequest) returns (Response);
+		rpc UpdateContent (UpdateContentRequest) returns (Response);
+}
+
+enum ContentType {
+		OTHER = 0;
+		IMAGE = 1;
+		GIF = 2;
+		VIDEO = 3;
+		TEXT = 4;
+		HTML = 5;
+}
+
+message Content {
+		int32 id = 1;
+		ContentType content_type = 2;
+		string file = 3;
+		repeated int32 tags = 4;
+		repeated int32 pools = 5;
+		bool is_private = 6;
+		bool is_restricted = 7;
+		bool is_favorite = 8;
+		int32 views = 9;
+		sfixed64 view_time = 10;
+		optional string title = 11;
+		optional string description = 12;
+}
+
+message Pool {
+		int32 id = 1;
+		string title = 2;
+		bool is_private = 3;
+		bool is_restricted = 4;
+		bool is_favorite = 5;
+		repeated int32 tags = 6;
+		repeated int32 content = 7;
+		optional string thumbnail = 8;
+		optional string description = 9;
+}
+
+message ContentRequest {
+		bool isPool = 1;
+		bool includePrivate = 2;
+		repeated ContentType exclude_types = 3;
+		repeated int32 ids = 4;
+		optional string querry_include = 5;
+		optional string querry_exclude = 6;
+}
+
+message ContentReply {
+		repeated Content content = 1;
+		Response response = 2;
+}
+
+message PoolReply {
+		repeated Pool pool = 1;
+		Response response = 2;
+}
+
+message UpdateContentViewsRequest {
+		int32 views_add = 1;
+		sfixed64 time_add = 2;
+}
+
+message UpdateContentRequest {
+		Content content = 1;
+}
